@@ -25,13 +25,17 @@ defmodule Exlox.Parser do
   and_ = string("&&") |> replace(:&&) |> label("&&")
   or_ = string("||") |> replace(:||) |> label("||")
 
+  lparen = ascii_char([?(]) |> label("(")
+  rparen = ascii_char([?)]) |> label(")")
+
   true_ = string("true") |> replace(true) |> label("true")
   false_ = string("false") |> replace(false) |> label("false")
   const = choice([true_, false_]) |> label("boolean")
 
   negation = not_ |> ignore |> parsec(:factor) |> tag(:!)
+  grouping = ignore(lparen) |> parsec(:expr) |> ignore(rparen)
 
-  defcombinatorp(:factor, choice([negation, const]))
+  defcombinatorp(:factor, choice([negation, grouping, const]))
 
   defcombinatorp(
     :term,

@@ -9,7 +9,8 @@ defmodule Exlox.ParserTest do
   defp unwrap({:ok, _, rest, _, _, _}), do: {:error, "could not parse '" <> rest <> "'"}
   defp unwrap({:error, reason, _rest, _, _, _}), do: {:error, reason}
 
-  @err "expected boolean while processing !, followed by factor or boolean"
+  @err "expected boolean while processing !, " <>
+         "followed by factor or (, followed by expr, followed by ) or boolean"
 
   test "parses consts" do
     assert true == parse("true")
@@ -39,5 +40,9 @@ defmodule Exlox.ParserTest do
     assert {:||, [false, true]} == parse("false||true")
 
     assert {:||, [{:&&, [true, false]}, true]} == parse("true&&false||true")
+  end
+
+  test "parses groups" do
+    assert {:&&, [true, {:||, [false, true]}]} == parse("true&&(false||true)")
   end
 end
