@@ -1,13 +1,7 @@
 defmodule Exlox do
-  @spec hello :: :ok
-  def hello do
-    run(~S"""
-    print("Hello World");
-    """)
+  def run(source) do
+    Exlox.Parser.parse(source) |> unwrap |> Exlox.Interpreter.run
   end
 
-  @spec run(String.t()) :: :ok
-  def run(source) do
-    Exlox.Parser.parse(source) |> IO.inspect
-  end
+  defp unwrap({:ok, ast, _rest, _, _, _}), do: ast
 end
