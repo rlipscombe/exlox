@@ -23,6 +23,7 @@ defmodule Exlox.Parser do
   not_ = string("!") |> label("!")
 
   and_ = string("&&") |> replace(:&&) |> label("&&")
+  or_ = string("||") |> replace(:||) |> label("||")
 
   true_ = string("true") |> replace(true) |> label("true")
   false_ = string("false") |> replace(false) |> label("false")
@@ -39,5 +40,12 @@ defmodule Exlox.Parser do
     |> reduce(:fold_infixl)
   )
 
-  defparsec(:parse, parsec(:term))
+  defcombinatorp(
+    :expr,
+    parsec(:term)
+    |> repeat(or_ |> parsec(:term))
+    |> reduce(:fold_infixl)
+  )
+
+  defparsec(:parse, parsec(:expr))
 end
