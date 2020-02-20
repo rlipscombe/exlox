@@ -1,18 +1,13 @@
 defmodule Exlox do
-  @moduledoc """
-  Documentation for `Exlox`.
-  """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Exlox.hello()
-      :world
-
-  """
+  @spec hello :: :ok
   def hello do
-    :world
+    run(~S"""
+    print("Hello World");
+    """)
+  end
+
+  @spec run(String.t()) :: :ok
+  def run(source) do
+    Exlox.Parser.parse(source) |> IO.inspect
   end
 end
