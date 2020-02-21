@@ -13,7 +13,7 @@ defmodule Exlox.ParserTest do
          "followed by factor or (, followed by expr, followed by ) or boolean"
 
   test "parses quoted strings" do
-    assert :moo == parse(~S("Hello World"))
+    assert {:quoted_string, ["Hello World"]} == Exlox.Parser.quoted_string(~S("Hello World")) |> unwrap
   end
 
   # test "parses consts" do

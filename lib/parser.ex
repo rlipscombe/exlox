@@ -59,6 +59,7 @@ defmodule Exlox.Parser do
       |> utf8_char([])
     )
     |> ignore(ignore(ascii_char([?"])))
+    |> reduce({List, :to_string, []})
     |> label("quoted string")
     |> tag(:quoted_string)
   )
