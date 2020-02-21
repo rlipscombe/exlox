@@ -1,8 +1,9 @@
-defmodule ExloxTest do
+defmodule Exlox.Test do
   use ExUnit.Case
-  doctest Exlox
 
-  test "greets the world" do
-    assert Exlox.hello() == :world
+  test "it" do
+    assert false == Exlox.run("true&&false")
+    assert false == Exlox.run("false||true")
+    assert true == Exlox.run("!(false||true)")
   end
 end
