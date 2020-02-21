@@ -1,7 +1,7 @@
 defmodule Exlox.Parser.Helpers do
   @doc """
   Converts a sequence of infix operators into a left-associative(?) AST.
-    Examples:
+  Examples:
     [true, :&&, false] is converted to {:&&, true, false}
     [true, :&&, false, :&&, true] is converted to {:&&, [{:&&, [true, false]}, true]}
   """
@@ -51,5 +51,17 @@ defmodule Exlox.Parser do
     |> reduce(:fold_infixl)
   )
 
-  defparsec(:parse, parsec(:expr))
+  defparsec(
+    :quoted_string,
+    ignore(ascii_char([?"]))
+    |> repeat(
+      lookahead_not(ignore(ascii_char([?"])))
+      |> utf8_char([])
+    )
+    |> ignore(ignore(ascii_char([?"])))
+    |> label("quoted string")
+    |> tag(:quoted_string)
+  )
+
+  defparsec(:parse, parsec(:quoted_string))
 end
