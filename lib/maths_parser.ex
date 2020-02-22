@@ -1,10 +1,16 @@
 defmodule Exlox.MathsParser do
   import NimbleParsec
 
-  sum = integer(min: 1) |> ascii_char([?+]) |> integer(min: 1)
+  bin_op = ascii_char([?+])
+
+  defcombinatorp(
+    :sum,
+    integer(min: 1)
+    |> repeat(bin_op |> integer(min: 1))
+  )
 
   defparsec(
     :parse,
-    sum
+    parsec(:sum)
   )
 end
