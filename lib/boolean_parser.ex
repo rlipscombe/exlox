@@ -26,10 +26,15 @@ defmodule Exlox.BooleanParser do
     |> reduce(:fold_infixl)
   )
 
-  defparsec(
+  defcombinatorp(
     :expr,
     parsec(:term)
     |> repeat(or_ |> parsec(:term))
     |> reduce(:fold_infixl)
+  )
+
+  defparsec(
+    :parse,
+    parsec(:expr)
   )
 end

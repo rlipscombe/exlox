@@ -2,7 +2,7 @@ defmodule Exlox.BooleanParserTest do
   use ExUnit.Case
 
   defp parse(input) do
-    Exlox.BooleanParser.expr(input) |> unwrap
+    Exlox.BooleanParser.parse(input) |> unwrap
   end
 
   defp unwrap({:ok, [acc], "", _, _, _}), do: acc
