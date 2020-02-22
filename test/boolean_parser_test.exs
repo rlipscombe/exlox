@@ -1,20 +1,16 @@
-defmodule Exlox.ParserTest do
+defmodule Exlox.BooleanParserTest do
   use ExUnit.Case
 
   defp parse(input) do
-    Exlox.Parser.expr(input) |> unwrap
+    Exlox.BooleanParser.expr(input) |> unwrap
   end
 
   defp unwrap({:ok, [acc], "", _, _, _}), do: acc
-  #defp unwrap({:ok, _, rest, _, _, _}), do: {:error, "could not parse '" <> rest <> "'"}
+  # defp unwrap({:ok, _, rest, _, _, _}), do: {:error, "could not parse '" <> rest <> "'"}
   defp unwrap({:error, reason, _rest, _, _, _}), do: {:error, reason}
 
   @err "expected boolean while processing !, " <>
          "followed by factor or (, followed by expr, followed by ) or boolean"
-
-  test "parses quoted strings" do
-    assert {:quoted_string, ["Hello World"]} == Exlox.Parser.quoted_string(~S("Hello World")) |> unwrap
-  end
 
   test "parses consts" do
     assert true == parse("true")
