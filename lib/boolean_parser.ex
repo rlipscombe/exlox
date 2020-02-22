@@ -14,7 +14,7 @@ defmodule Exlox.BooleanParser do
   false_ = string("false") |> replace(false) |> label("false")
   const = choice([true_, false_]) |> label("boolean")
 
-  negation = not_ |> ignore |> parsec(:factor) |> tag(:!)
+  negation = ignore(not_) |> parsec(:factor) |> tag(:!)
   grouping = ignore(lparen) |> parsec(:expr) |> ignore(rparen)
 
   defcombinatorp(:factor, choice([negation, grouping, const]))
