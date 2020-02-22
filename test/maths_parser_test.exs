@@ -25,5 +25,6 @@ defmodule Exlox.MathsParserTest do
   test "grouping" do
     assert [{:*, [{:+, [2, 3]}, 4]}] = Exlox.MathsParser.parse("(2+3)*4") |> unwrap
     assert [{:+, [2, {:*, [3, 4]}]}] = Exlox.MathsParser.parse("2+(3*4)") |> unwrap
+    assert [{:+, [{:*, [3, 4]}, 2]}] = Exlox.MathsParser.parse("(3*4)+2") |> unwrap
   end
 end
