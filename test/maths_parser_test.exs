@@ -16,4 +16,14 @@ defmodule Exlox.MathsParserTest do
   test "simple subtraction" do
     assert [{:*, [2, 3]}] == Exlox.MathsParser.parse("2*3") |> unwrap
   end
+
+  test "operator precedence" do
+    # BUG: This doesn't agree with Elixir's idea of what 2+3*4 is.
+    assert [{:+, [2, {:*, [3, 4]}]}] = Exlox.MathsParser.parse("2+3*4") |> unwrap
+  end
+
+  test "grouping" do
+    assert [{:*, [{:+, [2, 3]}, 4]}] = Exlox.MathsParser.parse("(2+3)*4") |> unwrap
+    assert [{:+, [2, {:*, [3, 4]}]}] = Exlox.MathsParser.parse("2+(3*4)") |> unwrap
+  end
 end
