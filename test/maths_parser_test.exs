@@ -9,6 +9,6 @@ defmodule Exlox.MathsParserTest do
   end
 
   test "simple addition" do
-    assert {:+, [1, 2]} == Exlox.MathsParser.parse("1+2") |> unwrap
+    assert [{:+, [1, 2]}] == Exlox.MathsParser.parse("1+2") |> unwrap
   end
 end
