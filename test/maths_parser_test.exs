@@ -7,4 +7,8 @@ defmodule Exlox.MathsParserTest do
     # TODO: Why is it in a list?
     assert [1] == Exlox.MathsParser.parse("1") |> unwrap
   end
+
+  test "simple addition" do
+    assert {:+, [1, 2]} == Exlox.MathsParser.parse("1+2") |> unwrap
+  end
 end
