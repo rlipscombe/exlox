@@ -4,7 +4,7 @@ defmodule Exlox.MathsParserTest do
   defp unwrap({:ok, ast, "", _, _, _}), do: ast
 
   test "single integer" do
-    # TODO: Why is it in a list?
+    # It's in a list, because each piece of the parser returns its bit separately.
     assert [1] == Exlox.MathsParser.parse("1") |> unwrap
   end
 

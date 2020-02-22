@@ -1,8 +1,10 @@
 defmodule Exlox.MathsParser do
   import NimbleParsec
 
-  nat = integer(min: 1) |> label("integer")
-  # expr = nat |> ascii_char(?+) |> nat
+  sum = integer(min: 1) |> ascii_char([?+]) |> integer(min: 1)
 
-  defparsec(:parse, nat)
+  defparsec(
+    :parse,
+    sum
+  )
 end
