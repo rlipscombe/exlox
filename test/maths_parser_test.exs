@@ -10,5 +10,6 @@ defmodule Exlox.MathsParserTest do
 
   test "simple addition" do
     assert [{:+, [1, 2]}] == Exlox.MathsParser.parse("1+2") |> unwrap
+    assert [{:+, [{:+, [1, 2]}, 3]}] == Exlox.MathsParser.parse("1+2+3") |> unwrap
   end
 end
