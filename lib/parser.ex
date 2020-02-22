@@ -44,7 +44,7 @@ defmodule Exlox.Parser do
     |> reduce(:fold_infixl)
   )
 
-  defcombinatorp(
+  defparsec(
     :expr,
     parsec(:term)
     |> repeat(or_ |> parsec(:term))
