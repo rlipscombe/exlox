@@ -3,7 +3,7 @@ defmodule Exlox.MathsParserTest do
 
   defp unwrap({:ok, ast, "", _, _, _}), do: ast
 
-  test "it" do
+  test "single integer" do
     # TODO: Why is it in a list?
     assert [1] == Exlox.MathsParser.parse("1") |> unwrap
   end
