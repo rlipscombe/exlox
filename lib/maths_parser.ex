@@ -21,14 +21,14 @@ defmodule Exlox.MathsParser do
   defcombinatorp(
     :term,
     parsec(:factor)
-    |> repeat(plusminus_ |> parsec(:factor))
+    |> repeat(muldiv_ |> parsec(:factor))
     |> reduce(:fold_infixl)
   )
 
   defparsec(
     :expr,
     parsec(:term)
-    |> repeat(muldiv_ |> parsec(:term))
+    |> repeat(plusminus_ |> parsec(:term))
     |> reduce(:fold_infixl)
   )
 

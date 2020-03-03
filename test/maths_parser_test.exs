@@ -18,7 +18,6 @@ defmodule Exlox.MathsParserTest do
   end
 
   test "operator precedence" do
-    # BUG: This doesn't agree with Elixir's idea of what 2+3*4 is.
     assert [{:+, [2, {:*, [3, 4]}]}] = Exlox.MathsParser.parse("2+3*4") |> unwrap
   end
 
