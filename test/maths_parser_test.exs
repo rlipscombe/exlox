@@ -15,11 +15,21 @@ defmodule Exlox.MathsParserTest do
 
   test "simple subtraction" do
     assert [{:-, [2, 3]}] == Exlox.MathsParser.parse("2-3") |> unwrap
-    assert [{:-, [2, {:-, [3, 4]}]}] == Exlox.MathsParser.parse("2-3-4") |> unwrap
+    # subtraction is left-associative
+    assert [{:-, [{:-, [2, 3]}, 4]}] == Exlox.MathsParser.parse("2-3-4") |> unwrap
+    assert [{:-, [{:-, [2, 3]}, 4]}] == Exlox.MathsParser.parse("(2-3)-4") |> unwrap
   end
 
   test "simple multiplication" do
     assert [{:*, [2, 3]}] == Exlox.MathsParser.parse("2*3") |> unwrap
+    assert [{:*, [{:*, [2, 3]}, 4]}] == Exlox.MathsParser.parse("2*3*4") |> unwrap
+    assert [{:*, [{:*, [2, 3]}, 4]}] == Exlox.MathsParser.parse("(2*3)*4") |> unwrap
+  end
+
+  test "simple division" do
+    assert [{:/, [2, 3]}] == Exlox.MathsParser.parse("2/3") |> unwrap
+    assert [{:/, [{:/, [2, 3]}, 4]}] == Exlox.MathsParser.parse("2/3/4") |> unwrap
+    assert [{:/, [{:/, [2, 3]}, 4]}] == Exlox.MathsParser.parse("(2/3)/4") |> unwrap
   end
 
   test "operator precedence" do
