@@ -4,7 +4,12 @@ defmodule Exlox.MathsParser do
 
   constant = integer(min: 1)
 
-  plus_ = ascii_char([?+]) |> replace(:+)
+  plus_ =
+    optional(repeat(ascii_char([?\s])))
+    |> ascii_char([?+])
+    |> optional(repeat(ascii_char([?\s])))
+    |> replace(:+)
+
   minus_ = ascii_char([?-]) |> replace(:-)
   plusminus_ = choice([plus_, minus_])
 
